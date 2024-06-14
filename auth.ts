@@ -5,6 +5,7 @@ import {z} from 'zod';
 import {User} from "@/app/lib/definitions";
 import {sql} from "@vercel/postgres";
 import bcrypt from "bcrypt";
+import Google from "@auth/core/providers/google";
 
 async function getUser(email: string): Promise<User | undefined> {
     try {
@@ -36,5 +37,5 @@ export const { handlers, signIn, signOut,auth } = NextAuth({
             console.log('Invalid credentials');
             return null
         }
-    })]
+    }),Google]
 });
