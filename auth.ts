@@ -6,6 +6,7 @@ import {User} from "@/app/lib/definitions";
 import {sql} from "@vercel/postgres";
 import bcrypt from "bcrypt";
 import Google from "@auth/core/providers/google";
+import {SignInError} from "@auth/core/errors";
 
 async function getUser(email: string): Promise<User | undefined> {
     try {
@@ -16,7 +17,7 @@ async function getUser(email: string): Promise<User | undefined> {
     }
 }
 
-export const { handlers, signIn, signOut,auth } = NextAuth({
+export const {  signIn, signOut } = NextAuth({
     ...authConfig,
     providers: [Credentials({
         async authorize(credentials) {
@@ -34,7 +35,6 @@ export const { handlers, signIn, signOut,auth } = NextAuth({
                 if (passwordsMatch) return user;
             }
 
-            console.log('Invalid credentials');
             return null
         }
     }),Google]
